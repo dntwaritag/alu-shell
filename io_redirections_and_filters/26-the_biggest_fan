@@ -1,2 +1,2 @@
 #!/bin/bash
-cut -f 1 | tr -d '[:blank:]' | sort | uniq -c | sort -nr | awk '{print $2}'
+cut -f 1 | tr -d '[:blank:]' | sort | uniq -c | sort -nr | while read -r count host; do echo "$host"; done
