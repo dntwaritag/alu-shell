@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 # This script indefinitely writes "I am alive!" to the file /tmp/my_process,
 # pausing for 2 seconds between each message.
 
