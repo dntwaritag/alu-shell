@@ -2,7 +2,7 @@
 # Bash script to manage manage_my_process
 
 PID_FILE="/var/run/my_process.pid"
-PROCESS_SCRIPT="./manage_my_process"
+PROCESS_SCRIPT="/path/to/manage_my_process"
 
 start_process() {
   $PROCESS_SCRIPT &
