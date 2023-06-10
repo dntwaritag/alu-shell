@@ -1,49 +1,49 @@
 #!/usr/bin/env bash
-# Script to manage the manage_my_process script
+# Bash (init) script to manage the manage_my_process script
 
-# Function to start the manage_my_process script
-start_manage_my_process() {
-    if [ -f /var/run/my_process.pid ]; then
-        echo "manage_my_process is already running"
+PID_FILE="/var/run/my_process.pid"
+MANAGE_MY_PROCESS_SCRIPT="./manage_my_process.sh"
+
+start() {
+    if [ -f "$PID_FILE" ]; then
+        echo "manage_my_process is already running."
     else
-        ./manage_my_process.sh &
-        echo $! > /var/run/my_process.pid
+        $MANAGE_MY_PROCESS_SCRIPT &
+        echo $! > $PID_FILE
         echo "manage_my_process started"
     fi
 }
 
-# Function to stop the manage_my_process script
-stop_manage_my_process() {
-    if [ -f /var/run/my_process.pid ]; then
-        pid=$(cat /var/run/my_process.pid)
+stop() {
+    if [ -f "$PID_FILE" ]; then
+        pid=$(cat $PID_FILE)
         kill $pid
-        rm /var/run/my_process.pid
+        rm $PID_FILE
         echo "manage_my_process stopped"
     else
-        echo "manage_my_process is not running"
+        echo "manage_my_process is not running."
     fi
 }
 
-# Function to restart the manage_my_process script
-restart_manage_my_process() {
-    stop_manage_my_process
-    start_manage_my_process
+restart() {
+    stop
+    start
     echo "manage_my_process restarted"
 }
 
-# Main script logic
-case $1 in
+case "$1" in
     start)
-        start_manage_my_process
+        start
         ;;
     stop)
-        stop_manage_my_process
+        stop
         ;;
     restart)
-        restart_manage_my_process
+        restart
         ;;
     *)
-        echo "Usage: manage_my_process {start|stop|restart}"
+        echo "Usage: $0 {start|stop|restart}"
+        exit 1
         ;;
 esac
 
