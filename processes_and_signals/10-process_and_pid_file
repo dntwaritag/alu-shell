@@ -1,35 +1,8 @@
 #!/usr/bin/env bash
+# Script that writes "I am alive!" to the file /tmp/my_process indefinitely
 
-pid_file="/var/run/holbertonscript.pid"
-
-# Function to handle SIGTERM signal
-sigterm_handler() {
-    echo "I hate the kill command"
-    cleanup_and_exit
-}
-
-# Function to handle SIGQUIT signal
-sigquit_handler() {
-    cleanup_and_exit
-}
-
-# Function to perform cleanup and exit the script
-cleanup_and_exit() {
-    echo "Cleaning up and terminating the script..."
-    rm -f "$pid_file"  # Delete the PID file
-    exit 0
-}
-
-# Register signal handlers
-trap 'sigterm_handler' SIGTERM
-trap 'sigquit_handler' SIGQUIT
-
-# Store the script's PID in the file
-echo $$ > "$pid_file"
-
-# Display the string indefinitely
 while true; do
-    echo "To infinity and beyond"
+    echo "I am alive!" >> /tmp/my_process
     sleep 2
 done
 
