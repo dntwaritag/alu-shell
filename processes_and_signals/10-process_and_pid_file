@@ -1,8 +1,35 @@
 #!/usr/bin/env bash
-# Script that writes "I am alive!" to the file /tmp/my_process indefinitely
+# Script that creates a PID file, displays a message indefinitely, and handles signals
 
+# Create PID file
+echo $$ > /var/run/myscript.pid
+
+# Function to handle SIGTERM signal
+sigterm_handler() {
+    echo "I hate the kill command"
+    rm /var/run/myscript.pid
+    exit
+}
+
+# Function to handle SIGINT signal
+sigint_handler() {
+    echo "Y U no love me?!"
+}
+
+# Function to handle SIGQUIT signal
+sigquit_handler() {
+    rm /var/run/myscript.pid
+    exit
+}
+
+# Trap signals and associate them with corresponding functions
+trap sigterm_handler SIGTERM
+trap sigint_handler SIGINT
+trap sigquit_handler SIGQUIT
+
+# Display message indefinitely
 while true; do
-    echo "I am alive!" >> /tmp/my_process
+    echo "To infinity and beyond"
     sleep 2
 done
 
